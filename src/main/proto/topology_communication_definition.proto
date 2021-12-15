@@ -1,0 +1,60 @@
+syntax = "proto3";
+import "google/protobuf/empty.proto";
+option java_multiple_files = true;
+package cz.prespjan.topology_communication;
+
+message TCMessage {
+  string body = 1;
+  NodeIdentifier sender = 2;
+}
+message TCResponse {
+  bool received = 1;
+}
+
+
+message DisconnectMessage {
+  bool voteLeader = 1;
+  NodeIdentifier node = 2;
+
+}
+message NodeIdentifier {
+  string address = 1;
+  string port = 2;
+}
+enum TopoMessageType {
+  ELECTION = 0;
+  ELECTED = 1;
+  CHECK_LEFT = 2;
+  CHECK_RIGHT = 3;
+}
+message TopoMessage {
+  NodeIdentifier node = 1;
+  string guid = 2;
+  TopoMessageType messageType = 3;
+}
+service TopologyCommunicationService {
+  rpc setRemoteLeft(NodeIdentifier) returns(TCResponse);
+  rpc ping(TCMessage) returns(TCResponse);
+  rpc setRemoteRight(NodeIdentifier) returns(TCResponse);
+  rpc startElectionRemote(google.protobuf.Empty) returns(TCResponse);
+  rpc setRemoteTopologyOKtoOK(NodeIdentifier) returns(TCResponse);
+  rpc getRemoteLeft(google.protobuf.Empty) returns(NodeIdentifier);
+  rpc getRemoteRight(google.protobuf.Empty) returns(NodeIdentifier);
+  rpc addToOtherParticipants(NodeIdentifier) returns(TCResponse);
+  rpc onMessage(TopoMessage) returns (TCResponse);
+  rpc disconnect(DisconnectMessage) returns (TCResponse);
+  rpc sendMessageToAll(TCMessage) returns (TCResponse);
+}
+
+message ChatMessage {
+  string body = 1;
+  NodeIdentifier sender = 2;
+  int64 messageCounter = 3;
+}
+message ChatMessageReceivedResponse {
+  bool received = 1;
+}
+
+service ChatService {
+  rpc receiveChatMessage(ChatMessage) returns (ChatMessageReceivedResponse);
+}
