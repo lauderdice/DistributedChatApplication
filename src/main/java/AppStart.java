@@ -6,10 +6,9 @@ public class AppStart {
         if (args.length > 5) {
             System.out.println("Error: too many arguments\n");
             System.out.println("Usage examples:");
-            System.out.println("YourIP YourPort FriendIP FriendPort YourName");
-            System.out.println(" 127.0.1.1 2010");
-            System.out.println(" 127.0.1.1 2011 127.0.1.1 2010");
-            System.out.println(" 127.0.1.1 2012 127.0.1.1 2011 Hump");
+            System.out.println("YourName YourIP YourPort FriendIP FriendPort");
+            System.out.println("Martin 127.0.1.1 2010");
+            System.out.println("Martin 127.0.1.1 2011 127.0.1.1 2010");
             return;
         }
         String localAddress="127.0.0.1";
@@ -17,11 +16,11 @@ public class AppStart {
         String remoteAddress=null;
         String remotePort = null;
         String participantName="Participant_1";
-        localAddress = (args.length>=1) ? localAddress=args[0] : localAddress;
-        localPort = (args.length>=2) ? localPort=args[1] : localPort;
-        remoteAddress = (args.length>=3) ? remoteAddress=args[2] : remoteAddress;
-        remotePort = (args.length>=4) ? remotePort=args[3] : remotePort;
-        participantName = (args.length>=5) ? participantName=args[4] : participantName;
+        participantName = (args.length>=1) ? participantName=args[0] : participantName;
+        localAddress = (args.length>=2) ? localAddress=args[1] : localAddress;
+        localPort = (args.length>=3) ? localPort=args[2] : localPort;
+        remoteAddress = (args.length>=4) ? remoteAddress=args[3] : remoteAddress;
+        remotePort = (args.length>=5) ? remotePort=args[4] : remotePort;
         ChatParticipantCredentials credentials = new ChatParticipantCredentials(
                 localAddress,
                 localPort,
