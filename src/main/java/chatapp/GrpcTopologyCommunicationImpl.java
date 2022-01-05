@@ -249,6 +249,7 @@ public class GrpcTopologyCommunicationImpl extends TopologyCommunicationServiceG
                         synchronized (this) {
                             this.isLeader = true;
                             this.leader = null;
+                            this.topologyOK = true;
                             this.allParticipants.clear();
                             this.allParticipants.add(selfCredentials);
                             this.setLeft(new ChatParticipantCredentials(selfCredentials.getLocalAddress(), selfCredentials.getPort()));
